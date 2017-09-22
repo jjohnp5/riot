@@ -22,14 +22,24 @@
                 <% matches.matches.forEach(function(match){ %>
                     <li>
                         <div class="matches" id="<%= match.gameId %>">
-                            <div>
-                                <p><%= match.champion %></p>
-                                <p><%= match.season %></p>
-                                <p><%= match.lane%></p>
-                            </div>
-                            <div class="match-info">
+                            <table class="table">
+                                <thead>
+                                    <th>Summoner</th>
+                                    <th>Summoner</th>
+                                    <th>Items</th>
+                                    <th>Kills</th>
+                                    <th>ii</th>
+                                </thead>
+                                <tbody>
+                            </table>
+                            <!--<div>-->
+                                <!--<p><%= match.champion %></p>-->
+                                <!--<p><%= match.season %></p>-->
+                                <!--<p><%= match.lane%></p>-->
+                            <!--</div>-->
+                            <!--<div class="match-info">-->
 
-                            </div>
+                            <!--</div>-->
                         </div>
 
                     </li>
@@ -51,6 +61,9 @@
 <script type="text/javascript">
     var j = jQuery.noConflict();
     j(document).ready(function () {
+        j.ajaxSetup({
+            cache: false
+        });
         var matches = j('.matches');
         matches.each(function (index){
             j.ajax('/matches/' + this.id)
@@ -58,13 +71,25 @@
                     console.log(data);
                     var party = "";
                     for(var i = 0; i < data.participants.length; i++){
-                        party += `<div>${data.participants[i].championId}</div>
-                                    <div>${data.participants[i].spell1Id}</div>
-                                    <div>${data.participants[i].spell2Id}</div>
-                                    <div>${data.participants[i].teamId}</div>
-                                    <div>Name: ${data.participantIdentities[i].player.summonerName}</div>
+                        if(data.participants[i].teamId === 100) {
+                            party += `<tr class="table-success">
+                                    <td>${data.participants[i].championId}</td>
+                                    <td>${data.participants[i].spell1Id}</td>
+                                    <td>${data.participants[i].spell2Id}</td>
+                                    <td>${data.participants[i].teamId}</td>
+                                    <td>Name: ${data.participantIdentities[i].player.summonerName}</td>
 
                                     `;
+                        }else{
+                            party += `<tr class="table-danger">
+                                    <td>${data.participants[i].championId}</td>
+                                    <td>${data.participants[i].spell1Id}</td>
+                                    <td>${data.participants[i].spell2Id}</td>
+                                    <td>${data.participants[i].teamId}</td>
+                                    <td>Name: ${data.participantIdentities[i].player.summonerName}</td>
+
+                                    `;
+                        }
 
                     };
                     matchInfo = `<div>Game Mode: ${data.gameMode}</div>
@@ -73,7 +98,9 @@
 
 
                                 `;
-                    j('#'+data.gameId).html(matchInfo);});
+                    partay = party;
+                    j('#'+data.gameId+' .table').append(partay + '</tbody>');
+                });
         });
     });
 </script>

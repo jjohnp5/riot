@@ -42,16 +42,25 @@ app.get('/summoner', function (req, res) {
    });
 app.get("/matches/:id", function(req, res){
     request("https://na1.api.riotgames.com/lol/match/v3/matches/" + req.params.id + "?api_key=" + process.env.API_KEY, function (err, response, match) {
-       if(!err && response.statusCode === 200){
-           data = JSON.parse(match);
-           res.send(data);
-       }else{
-           res.sendStatus(response.statusCode);
-       }
-    })
+        if (!err && response.statusCode === 200) {
+                data = JSON.parse(match);
+                console.log(data);
+                res.send(data);
+            }else {
+            res.sendStatus(response.statusCode);
+        }
+        })
 });
-
-
+// function callAPI(url){
+//     return new Promise((resolve, reject) => {
+//
+//             .then(res => JSON.parse(res))
+//             .then(data => resolve(data))
+//             .catch(err = >)
+// }
+//         })
+// }
+//
 
 app.listen(process.env.PORT || 3000, function () {
    console.log("app started");
