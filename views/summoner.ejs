@@ -21,11 +21,14 @@
             <ul>
                 <% matches.matches.forEach(function(match){ %>
                     <li>
-                        <div><%= match.gameId %>
+                        <div class="matches" id="<%= match.gameId %>">
                             <div>
                                 <p><%= match.champion %></p>
                                 <p><%= match.season %></p>
                                 <p><%= match.lane%></p>
+                            </div>
+                            <div class="match-info">
+
                             </div>
                         </div>
 
@@ -39,8 +42,40 @@
 
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var j = jQuery.noConflict();
+    j(document).ready(function () {
+        var matches = j('.matches');
+        matches.each(function (index){
+            j.ajax('/matches/' + this.id)
+                .done(function (data) {
+                    console.log(data);
+                    var party = "";
+                    for(var i = 0; i < data.participants.length; i++){
+                        party += `<div>${data.participants[i].championId}</div>
+                                    <div>${data.participants[i].spell1Id}</div>
+                                    <div>${data.participants[i].spell2Id}</div>
+                                    <div>${data.participants[i].teamId}</div>
+                                    <div>Name: ${data.participantIdentities[i].player.summonerName}</div>
+
+                                    `;
+
+                    };
+                    matchInfo = `<div>Game Mode: ${data.gameMode}</div>
+                                <div>Patch: ${data.gameVersion}</div>
+                                <div>Participants: ${party}</div>
+
+
+                                `;
+                    j('#'+data.gameId).html(matchInfo);});
+        });
+    });
+</script>
 </body>
 </html>

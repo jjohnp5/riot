@@ -12,7 +12,7 @@ var axios = require('axios');
 var dotenv = require('dotenv');
 
 
-dotenv.config({path: 'secret.env'});
+dotenv.config({path: '.env.text'});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -29,36 +29,28 @@ app.get('/summoner', function (req, res) {
            request("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+result.accountId+"/recent?api_key="+process.env.API_KEY, function (err, response, match) {
                if(!err && response.statusCode === 200) {
                    matches = JSON.parse(match);
-                   var games;
-                   var promise = matches.matches.map(function(game){
-                       console.log(game.gameId);
-                       iterateMatches(game.gameId);
-                   });
-                   Promise.all(promise)
-                       .then(function(results){
-                     console.log(results);
-                   });
+                   res.render("summoner", {result: result, matches: matches});
 
-                    console.log(games);
-                   res.render("summoner", {result: result, matches: matches, games: games});
+               }else{
+                   console.log(response.statusCode);
                }
                });
                }else{
-           console.log(process.env.API_KEY);
+           console.log(response.statusCode);
        }
            });
    });
+app.get("/matches/:id", function(req, res){
+    request("https://na1.api.riotgames.com/lol/match/v3/matches/" + req.params.id + "?api_key=" + process.env.API_KEY, function (err, response, match) {
+       if(!err && response.statusCode === 200){
+           data = JSON.parse(match);
+           res.send(data);
+       }else{
+           res.sendStatus(response.statusCode);
+       }
+    })
+});
 
-function iterateMatches(match){
-    request("https://na1.api.riotgames.com/lol/match/v3/matches/"+match+"?api_key="+process.env.API_KEY, function(err, response, game){
-        if(!err && response.statusCode ===200){
-            return JSON.parse(game);
-        }else{
-            return 'dummy'
-        }
-    });
-
-}
 
 
 app.listen(process.env.PORT || 3000, function () {
