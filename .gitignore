@@ -55,5 +55,9 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+<<<<<<< HEAD
 .env.text
+=======
+.env
+>>>>>>> 6a3aa7037f66d4376bc79ab0929d1f3cdb9e6c3b
 
