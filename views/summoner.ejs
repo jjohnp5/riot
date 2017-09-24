@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html>
 <head>
     <title>Das Movieeze</title>
@@ -22,5 +23,182 @@
 <!--<li></li>-->
 <!--</ul>-->
 
+=======
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container fluid">
+    <div class="row">
+        <div class="col-sm-12 col-lg-4">
+            <input type="hidden" value="<%= result.id%>" class="id-holder">
+            <p><%= matches %></p>
+            <h1>Hello, <%= result.name %></h1>
+            <img class="w-25 p-3" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%=result.profileIconId %>.png " alt="profile">
+
+        </div>
+        <div class="col-sm-12 col-lg-8">
+            <ul>
+                <% matches.matches.forEach(function(match){ %>
+                    <li>
+                        <% var date = new Date(match.timestamp)%>
+                        <p><%= date.toDateString()%></p>
+                        <div class="matches" id="<%= match.gameId %>">
+                            <table class="table">
+                                <thead>
+                                    <th>Champion</th>
+                                    <th>Spells</th>
+                                    <th>Team</th>
+                                    <th>Name</th>
+                                </thead>
+                                <tbody>
+                            </table>
+                            <!--<div>-->
+                                <!--<p><%= match.champion %></p>-->
+                                <!--<p><%= match.season %></p>-->
+                                <!--<p><%= match.lane%></p>-->
+                            <!--</div>-->
+                            <!--<div class="match-info">-->
+
+                            <!--</div>-->
+                        </div>
+
+                    </li>
+                <%})%>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var j = jQuery.noConflict();
+    j(document).ready(function () {
+        j.ajaxSetup({
+            cache: false
+        });
+        matchesProcessed = 0;
+        var matches = j('.matches');
+        var searchId = j('.id-holder');
+        console.log(searchId[0].value);
+
+        matches.each(function (index){
+            j.ajax('/matches/' + this.id)
+                .done(function (data) {
+                    console.log(data);
+                    var party = "";
+
+                    for(var i = 0; i < data.participants.length; i++){
+                        var partyTemplate = `
+                                <td class="champs" id="${data.participants[i].championId}"></td>
+                                <td>
+                                <div class="spells" id="${data.participants[i].spell1Id}"></div>
+                                <div class="spells" id="${data.participants[i].spell2Id}"></div>
+                                </td>
+                                <td>
+                                <div class="items" id="${data.participants[i].stats.item0}">${data.participants[i].stats.item0}</div>
+                                <div class="items" id="${data.participants[i].stats.item1}">${data.participants[i].stats.item1}</div>
+                                <div class="items" id="${data.participants[i].stats.item2}">${data.participants[i].stats.item2}</div>
+                                <div class="items" id="${data.participants[i].stats.item3}">${data.participants[i].stats.item3}</div>
+                                <div class="items" id="${data.participants[i].stats.item4}">${data.participants[i].stats.item4}</div>
+                                <div class="items" id="${data.participants[i].stats.item5}">${data.participants[i].stats.item5}</div>
+                                <div class="items" id="${data.participants[i].stats.item6}">${data.participants[i].stats.item6}</div>
+                                </td>
+                                <td>${data.participantIdentities[i].player.summonerName}</td>
+                                </tr>
+                                `;
+
+                        if (data.participants[i].teamId === 100 && data.participantIdentities[i].player.summonerId === parseInt(searchId[0].value)) {
+                            party += `<tr class="table-success">${partyTemplate}`
+                        } else if(data.participants[i].teamId === 100 && data.participantIdentities[i].player.summonerId !== parseInt(searchId[0].value)) {
+                            party += `<tr class="table-active">${partyTemplate}`;
+                        }else if(data.participants[i].teamId === 200 && data.participantIdentities[i].player.summonerId === parseInt(searchId[0].value)){
+                            party += `<tr class="table-success">${partyTemplate}`
+                        }else if(data.participants[i].teamId === 200 && data.participantIdentities[i].player.summonerId !== parseInt(searchId[0].value)){
+                            party += `<tr class="table-danger">${partyTemplate}`
+                        }
+
+
+                    };
+                    partay = party;
+                    j('#'+data.gameId+' .table').append(partay + '</tbody>');
+                    matchesProcessed++;
+                    if(matchesProcessed === matches.length){
+                        getSummonerSpells();
+                        getChampImages();
+                        getItemImages();
+                    }
+                });
+        });
+
+        function getSummonerSpells() {
+            j.ajax("/summoner/spells")
+                .done(function (result) {
+                    allTables = j('.spells')
+                    keys = Object.keys(result.data);
+                    for(var i = 0; i < allTables.length; i++){
+                        for(var k = 0; k < keys.length; k++){
+                            if(result.data[keys[k]].key === allTables[i].id){
+                                    imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/spell/${result.data[keys[k]].image.full}" alt="spell">`
+                                    allTables[i].innerHTML = imgTag;
+                                }
+
+                            }
+                    }
+                    });
+        }
+
+        function getChampImages(){
+            j.ajax("/summoner/champs")
+                .done(function (result) {
+                    allTables = j('.champs')
+                    keys = Object.keys(result.data);
+                    for(var i = 0; i < allTables.length; i++){
+                        for(var k = 0; k < keys.length; k++){
+                            if(result.data[keys[k]].key === allTables[i].id){
+                                imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/champion/${result.data[keys[k]].image.full}" alt="spell">`
+                                allTables[i].innerHTML = imgTag;
+                            }
+
+                        }
+                    }
+                });
+        }
+        function getItemImages(){
+            j.ajax("/summoner/items")
+                .done(function (result) {
+                    allTables = j('.items')
+                    keys = Object.keys(result.data);
+                    for(var i = 0; i < allTables.length; i++){
+                        for(var k = 0; k < keys.length; k++){
+
+                            if(keys[k] === allTables[i].id){
+                                imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/${result.data[keys[k]].image.full}" alt="spell">`
+                                allTables[i].innerHTML = imgTag;
+                            }
+
+                        }
+                    }
+                });
+        }
+
+    });
+</script>
+>>>>>>> 492cbe4ecf58eb92099f0166116add153419535e
 </body>
 </html>
