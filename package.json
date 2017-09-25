@@ -1,17 +1,18 @@
 {
   "name": "riotapi",
   "version": "1.0.0",
-  "description": "app using riot's api",
+  "description": "usage of riot api",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "serve": "nodemon server.js"
   },
   "author": "JOhn",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
-    "body-parser": "^1.18.1",
+    "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.15.4",

@@ -1,15 +1,12 @@
-/**
- * Created by john on 9/20/2017.
- */
 
 var express = require('express');
 var app = express();
-
 var request = require('request');
 var bodyParser = require('body-parser');
 var path = require('path');
 var axios = require('axios');
 var dotenv = require('dotenv');
+var queues = require('./queues.json');
 
 
 dotenv.config({path: '.env'});
@@ -31,7 +28,8 @@ app.get('/summoner', function (req, res) {
            request("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+result.accountId+"/recent?api_key="+process.env.API_KEY, function (err, response, match) {
                if(!err && response.statusCode === 200) {
                    matches = JSON.parse(match);
-                   res.render("summoner", {result: result, matches: matches});
+                   console.log(matches);
+                   res.render("summoner", {result: result, matches: matches, queues: queues});
 
                }else{
                    console.log(response.statusCode);
