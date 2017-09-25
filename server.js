@@ -12,7 +12,7 @@ var axios = require('axios');
 var dotenv = require('dotenv');
 
 
-dotenv.config({path: '.env.text'});
+dotenv.config({path: '.env'});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -86,5 +86,5 @@ app.get('/summoner/items', function (req, res) {
 })
 
 app.listen(process.env.PORT || 3000, function () {
-   console.log("app started");
+   console.log("RIOT app started");
 });

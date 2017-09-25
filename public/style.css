@@ -1,12 +1,12 @@
 
 .champs img, .spells img{
     float: left;
-    height: 50%;
-    width: 50%;
+    height: 2em;
+    width: 2em;
 }
 .items img, .items{
     float: left;
-    height: 35px;
-    width: 35px;
+    height: 2em;
+    width: 2em;
     background-color: gray;
 }
