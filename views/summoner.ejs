@@ -1,29 +1,3 @@
-<!DOCTYPE html>
-<<<<<<< HEAD
-<html>
-<head>
-    <title>Das Movieeze</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="/main.min.css">
-</head>
-<body>
-<% {var date =  new Date(result.revisionDate).toDateString();
-    }
-%>
-<img class="img-responsive" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%= result.profileIconId%>.png">
-<p>Name: <a href="/summoners/<%= result.name %>"><%= result.name%></a>
-</p>
-<p>Revision Date: <%= date %></p>
-
-<!--<ul class="slideshow">-->
-<!--<li></li>-->
-<!--<li></li>-->
-<!--<li></li>-->
-<!--<li></li>-->
-<!--<li></li>-->
-<!--</ul>-->
-
-=======
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -35,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container fluid">
+<div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col-lg-4">
             <input type="hidden" value="<%= result.id%>" class="id-holder">
@@ -44,35 +18,20 @@
             <img class="w-25 p-3" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%=result.profileIconId %>.png " alt="profile">
 
         </div>
-        <div class="col-sm-12 col-lg-8">
-            <ul>
+        <div class="col-12 col-lg-8">
+            <div>
                 <% matches.matches.forEach(function(match){ %>
-                    <li>
-                        <% var date = new Date(match.timestamp)%>
-                        <p><%= date.toDateString()%></p>
-                        <div class="matches" id="<%= match.gameId %>">
-                            <table class="table">
-                                <thead>
-                                    <th>Champion</th>
-                                    <th>Spells</th>
-                                    <th>Team</th>
-                                    <th>Name</th>
-                                </thead>
-                                <tbody>
-                            </table>
-                            <!--<div>-->
-                                <!--<p><%= match.champion %></p>-->
-                                <!--<p><%= match.season %></p>-->
-                                <!--<p><%= match.lane%></p>-->
-                            <!--</div>-->
-                            <!--<div class="match-info">-->
 
-                            <!--</div>-->
+                    <div class="row">
+                        <div class="row"><%= queues[match.queue]%></div>
+                        <div class="matches col-12" id="<%= match.gameId %>">
+
+
                         </div>
 
-                    </li>
+                    </div>
                 <%})%>
-            </ul>
+            </div>
 
         </div>
     </div>
@@ -105,12 +64,12 @@
 
                     for(var i = 0; i < data.participants.length; i++){
                         var partyTemplate = `
-                                <td class="champs" id="${data.participants[i].championId}"></td>
-                                <td>
+                                <div class="champs col-2 text-center" id="${data.participants[i].championId}"></div>
+                                <div class="col-1">
                                 <div class="spells" id="${data.participants[i].spell1Id}"></div>
                                 <div class="spells" id="${data.participants[i].spell2Id}"></div>
-                                </td>
-                                <td>
+                                </div>
+                                <div class="col-6">
                                 <div class="items" id="${data.participants[i].stats.item0}">${data.participants[i].stats.item0}</div>
                                 <div class="items" id="${data.participants[i].stats.item1}">${data.participants[i].stats.item1}</div>
                                 <div class="items" id="${data.participants[i].stats.item2}">${data.participants[i].stats.item2}</div>
@@ -118,25 +77,28 @@
                                 <div class="items" id="${data.participants[i].stats.item4}">${data.participants[i].stats.item4}</div>
                                 <div class="items" id="${data.participants[i].stats.item5}">${data.participants[i].stats.item5}</div>
                                 <div class="items" id="${data.participants[i].stats.item6}">${data.participants[i].stats.item6}</div>
-                                </td>
-                                <td>${data.participantIdentities[i].player.summonerName}</td>
-                                </tr>
+                                </div>
+                                 </div>
+                                `;
+                        var statTemplate = `
+                                    <div class="col-2">${data.participantIdentities[i].player.summonerName}</div>
+                                    <div class="col-1">${data.participants[i].stats.kills}/${data.participants[i].stats.deaths}/${data.participants[i].stats.assists}  ${((data.participants[i].stats.kills + data.participants[i].stats.assists)/data.participants[i].stats.deaths).toFixed(2)}</div>
                                 `;
 
                         if (data.participants[i].teamId === 100 && data.participantIdentities[i].player.summonerId === parseInt(searchId[0].value)) {
-                            party += `<tr class="table-success">${partyTemplate}`
+                            party += `<div class="row bg-success">${statTemplate}${partyTemplate}`;
                         } else if(data.participants[i].teamId === 100 && data.participantIdentities[i].player.summonerId !== parseInt(searchId[0].value)) {
-                            party += `<tr class="table-active">${partyTemplate}`;
+                            party += `<div class="row bg-primary">${statTemplate}${partyTemplate}`;
                         }else if(data.participants[i].teamId === 200 && data.participantIdentities[i].player.summonerId === parseInt(searchId[0].value)){
-                            party += `<tr class="table-success">${partyTemplate}`
+                            party += `<div class="row bg-success">${statTemplate}${partyTemplate}`;
                         }else if(data.participants[i].teamId === 200 && data.participantIdentities[i].player.summonerId !== parseInt(searchId[0].value)){
-                            party += `<tr class="table-danger">${partyTemplate}`
+                            party += `<div class="row bg-danger">${statTemplate}${partyTemplate}`;
                         }
 
 
                     };
                     partay = party;
-                    j('#'+data.gameId+' .table').append(partay + '</tbody>');
+                    j('#'+data.gameId).append(partay);
                     matchesProcessed++;
                     if(matchesProcessed === matches.length){
                         getSummonerSpells();
@@ -154,7 +116,7 @@
                     for(var i = 0; i < allTables.length; i++){
                         for(var k = 0; k < keys.length; k++){
                             if(result.data[keys[k]].key === allTables[i].id){
-                                    imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/spell/${result.data[keys[k]].image.full}" alt="spell">`
+                                    imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/spell/${result.data[keys[k]].image.full}" alt="spell">`
                                     allTables[i].innerHTML = imgTag;
                                 }
 
@@ -171,7 +133,7 @@
                     for(var i = 0; i < allTables.length; i++){
                         for(var k = 0; k < keys.length; k++){
                             if(result.data[keys[k]].key === allTables[i].id){
-                                imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/champion/${result.data[keys[k]].image.full}" alt="spell">`
+                                imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/champion/${result.data[keys[k]].image.full}" alt="spell">`
                                 allTables[i].innerHTML = imgTag;
                             }
 
@@ -188,7 +150,7 @@
                         for(var k = 0; k < keys.length; k++){
 
                             if(keys[k] === allTables[i].id){
-                                imgTag = `<img src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/${result.data[keys[k]].image.full}" alt="spell">`
+                                imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/${result.data[keys[k]].image.full}" alt="spell">`
                                 allTables[i].innerHTML = imgTag;
                             }
 
@@ -199,6 +161,5 @@
 
     });
 </script>
->>>>>>> 492cbe4ecf58eb92099f0166116add153419535e
 </body>
 </html>

@@ -1,12 +1,30 @@
 
-.champs img, .spells img{
-    float: left;
-    height: 50%;
-    width: 50%;
+/*.champs{*/
+    /*height: 3em;*/
+    /*width: 3em;*/
+/*}*/
+.champs img{
+    border-radius: 50%;
 }
-.items img, .items{
+/*img{*/
+    /*height:inherit;*/
+    /*width:inherit;*/
+
+/*}*/
+.spells{
     float: left;
-    height: 35px;
-    width: 35px;
+    height: 2em;
+    width: 2em;
+}
+.items{
+    float: left;
+    height: 2em;
+    width: 2em;
     background-color: gray;
+}
+.matches{
+    border: 2px solid #BADA55;
+}
+.row.bg-primary{
+    border: 1px solid #BADA55;
 }
