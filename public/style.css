@@ -1,8 +1,8 @@
 
-/*.champs{*/
-    /*height: 3em;*/
-    /*width: 3em;*/
-/*}*/
+.champs{
+    height: 2em;
+    width: 2em;
+}
 .champs img{
     border-radius: 50%;
 }
@@ -23,8 +23,13 @@
     background-color: gray;
 }
 .matches{
-    border: 2px solid #BADA55;
+    border: 2px solid #5cb85c;
 }
-.row.bg-primary{
-    border: 1px solid #BADA55;
+.row.bg-primary, .row.bg-danger{
+    border: 1px solid #5cb85c;
+}
+.matchbox{
+    -webkit-box-shadow: 4px 4px 28px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 28px -8px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 28px -8px rgba(0,0,0,0.75);
 }

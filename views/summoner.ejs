@@ -20,11 +20,15 @@
 
         </div>
         <div class="col-12 col-lg-8">
-            <div>
-                <% matches.matches.forEach(function(match){ %>
 
-                    <div class="row">
-                        <div class="row"><%= queues[match.queue]%></div>
+                <% matches.matches.forEach(function(match){  gameDate = new Date(match.timestamp)%>
+
+                    <div class="row matchbox">
+                        <div class="row" data-match="<%=match.gameId%>"><%= queues[match.queue]%>
+                            <div>
+                                <%= gameDate.toDateString()%>
+                            </div>
+                        </div>
                         <div class="matches col-12" id="<%= match.gameId %>">
 
 
@@ -32,7 +36,7 @@
 
                     </div>
                 <%})%>
-            </div>
+
 
         </div>
     </div>
@@ -58,17 +62,22 @@
         var matches = j('.matches');
         var searchId = j('.id-holder');
         console.log(searchId[0].value);
-
+        getSkillLevelUp(2601532663, 1);
         matches.each(function (index){
             j.ajax('/matches/' + this.id)
                 .done(function (data) {
                     console.log(data);
-                    var party = "";
+                    const dataMatch = j('*[data-match="'+data.gameId+'"]')
 
+                    var party = "";
+                    const gameDuration = `${Math.floor(data.gameDuration/60)}mins ${data.gameDuration%60}secs`;
+                    console.log(gameDuration)
+                    dataMatch.append('<div class="col align-self-end">Duration: '+gameDuration+'</div>');
                     for(var i = 0; i < data.participants.length; i++){
-                        var partyTemplate = `
-                                <div class="champs col-2 text-center" id="${data.participants[i].championId}"></div>
-                                <div class="col-1">
+                        var partyTemplate = `<div class="col-1">
+                                <div class="champs" id="${data.participants[i].championId}"></div>
+                                </div>
+                                <div class="col-2">
                                 <div class="spells" id="${data.participants[i].spell1Id}"></div>
                                 <div class="spells" id="${data.participants[i].spell2Id}"></div>
                                 </div>
@@ -82,6 +91,8 @@
                                 <div class="items" id="${data.participants[i].stats.item6}">${data.participants[i].stats.item6}</div>
                                 </div>
                                  </div>
+                                 <div> class="col loading"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"></div>
+                                 <div class="row skill-data"></div>
                                 `;
                         var statTemplate = `
                                     <div class="col-2">${data.participantIdentities[i].player.summonerName}</div>
@@ -162,6 +173,18 @@
                         }
                     }
                 });
+        }
+        function getSkillLevelUp(match, participantId) {
+            j.ajax("/matches/timelines/"+match)
+                .done(function (result) {
+                    result.frames.forEach(timeframe => {
+                        timeframe.events.forEach(frame => {
+                            if(frame.participantId === participantId && frame.type === "SKILL_LEVEL_UP"){
+                                console.log(frame);
+                            }
+                        })
+                    })
+                })
         }
 
     });
