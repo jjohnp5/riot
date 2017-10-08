@@ -15,11 +15,11 @@ Request - about to be removed. All API calls will be done through Axios.
 Body-parser for Request - about to be removed upon removal of Request API
 ```
 
-###Author
-####John Lagmay - full work.
+### Author
+#### John Lagmay - full work.
 
-###Contributions
+### Contributions
 No Contributions at this time. I want to finish the project for stronger portfolio.
 
-###Acknowledgments
-####Thank you for all the developers out there that make my life easy by creating these awesome framework used on this project!
+### Acknowledgments
+#### Thank you for all the developers out there that make my life easy by creating these awesome framework used on this project!
