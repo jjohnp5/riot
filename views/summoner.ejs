@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-lg-4">
+    <div class="container">
+        <div class="profile">
             <input type="hidden" value="<%= result.id%>" class="id-holder">
             <p><%= matches %></p>
             <h1>Hello, <%= result.name %></h1>
-            <img class="w-25 p-3" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%=result.profileIconId %>.png " alt="profile">
+            <img class="pro-pic" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%=result.profileIconId %>.png " alt="profile">
 
         </div>
-        <div class="col-12 col-lg-8">
+        <div class="match-list">
             <div>
                 <% matches.matches.forEach(function(match){ %>
 
-                    <div class="row">
+                    <div class="matches">
                         <div class="row"><%= queues[match.queue]%></div>
                         <div class="matches col-12" id="<%= match.gameId %>">
 
@@ -35,7 +33,7 @@
 
         </div>
     </div>
-</div>
+
 
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
