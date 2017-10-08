@@ -28,7 +28,6 @@ app.get('/summoner', function (req, res) {
            request("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+result.accountId+"/recent?api_key="+process.env.API_KEY, function (err, response, match) {
                if(!err && response.statusCode === 200) {
                    matches = JSON.parse(match);
-                   console.log(matches);
                    res.render("summoner", {result: result, matches: matches, queues: queues});
 
                }else{
@@ -82,8 +81,17 @@ app.get('/summoner/items', function (req, res) {
         }
     })
 })
+app.get('/matches/timelines/:match', function (req, res) {
+    request("https://na1.api.riotgames.com/lol/match/v3/timelines/by-match/"+req.params.match+"?api_key="+process.env.API_KEY, function (err, response, timelines) {
+        if(!err && response.statusCode === 200){
+            timeline = JSON.parse(timelines);
+            res.send(timeline)
+        }else{
+            res.sendStatus(response.statusCode);
+        }
+    })
+})
 
 app.listen(process.env.PORT || 3000, function () {
-   console.log("app started");
+   console.log("RIOT app started");
 });
-
