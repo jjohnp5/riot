@@ -32,10 +32,10 @@ app.get('/summoner', function (req, res, next) {
             return response.data;
         })
         .then(function(data){
-            axios("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+data.accountId+"?beginIndex=0&endIndex=10&api_key="+process.env.API_KEY)
+            axios("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+data.accountId+"?endIndex=10&api_key="+process.env.API_KEY)
                 .then(function(matchlist){
                     matchList = matchlist.data;
-                    // console.log(matchlist.data);
+                    // console.log(matchList);
                     // console.log(summoner);
                     return matchlist.data;
                 })
@@ -46,7 +46,7 @@ app.get('/summoner', function (req, res, next) {
                         matchdata.matches.forEach(match => {
                             axios("https://na1.api.riotgames.com/lol/match/v3/matches/" + match.gameId + "?api_key=" + process.env.API_KEY)
                                 .then(function(matchResult){
-                                    matchesArray.push(matchResult.data)
+                                    matchesArray[matchCounter] = matchResult.data;
                                     matchCounter++;
                                     if(matchCounter === matchdata.matches.length){
                                         resolve(matchesArray);
@@ -56,6 +56,7 @@ app.get('/summoner', function (req, res, next) {
 
                         });
                     promise.then(function(matchesArray){
+                                // console.log(matchesArray);
                                 res.render("summoner", {summoner: summoner, matchList: matchList, matchesArray: matchesArray});
                             }).catch(function(error){
                                 console.log(error);

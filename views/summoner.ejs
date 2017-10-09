@@ -18,45 +18,55 @@
 
         </div>
         <div class="matches-container">
-            <%for(let i = 0; i < matchesArray.length; i++){%>
+            <%for(let i = 0; i < matchList.matches.length; i++){
+                for(let k = 0; k < matchesArray.length; k++){
+                    if(matchList.matches[i].gameId === matchesArray[k].gameId){%>
+                        <div class="match">
+                            <% for(let j = 0; j < matchesArray[k].participantIdentities.length; j++){
+                                if(matchesArray[k].participantIdentities[j].player.accountId === summoner.accountId){
+                                    %>
+                                    <div><p>Match created: <%=new Date(matchesArray[k].gameCreation).toDateString()%></p></div>
+                                    <div class="match-container win-<%=matchesArray[k].participants[j].stats.win%>">
+                                        <div class="champ" data-champ="<%= matchesArray[k].participants[j].championId%>">
+                                             <%= matchesArray[k].participants[j].championId%>
+                                        </div>
+                                        <div class="spell-container">
+                                            <div class="spell" data-spell="<%= matchesArray[k].participants[j].spell1Id%>"><%= matchesArray[k].participants[j].spell1Id%></div>
+                                            <div class="spell" data-spell="<%= matchesArray[k].participants[j].spell2Id%>"><%= matchesArray[k].participants[j].spell2Id%></div>
+                                        </div>
+                                        <div class="kda">
+                                            <div><%=matchesArray[k].participants[j].stats.kills%>/<%=matchesArray[k].participants[j].stats.deaths%>/<%=matchesArray[k].participants[j].stats.assists%></div>
+                                            <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[j].stats.kills+matchesArray[k].participants[j].stats.assists)/matchesArray[k].participants[j].stats.deaths)*100)/100).toFixed(2)%></div>
+                                        </div>
+                                        <div class="items">
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item0%>"><%= matchesArray[k].participants[j].stats.item0%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item1%>"><%= matchesArray[k].participants[j].stats.item1%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item2%>"><%= matchesArray[k].participants[j].stats.item2%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item3%>"><%= matchesArray[k].participants[j].stats.item3%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item4%>"><%= matchesArray[k].participants[j].stats.item4%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item5%>"><%= matchesArray[k].participants[j].stats.item5%></div>
+                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item6%>"><%= matchesArray[k].participants[j].stats.item6%></div>
+                                        </div>
+                                        <button class="more more-<%=matchesArray[k].participants[j].stats.win%>" data-btn="<%=matchesArray[k].gameId%>">&#43;</button>
+                                    </div>
+                            <%}}%>
 
+                            <div class="hidden-match-data" data-divid="<%=matchesArray[k].gameId%>">
+                                <% for(let h = 0; h < matchesArray[k].participants.length; h++){
+                                    if(matchesArray[k].participants[h].teamId === 100){%>
+                                    <div class="team-100">
+                                        <div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div>
+                                    </div>
+                                    <%}else{%>
+                                <div class="team-200">
+                                    <div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div>
+                                </div>
+                                    <%}}%>
+                            </div>
+                            <%}}%>
 
-
-            <div class="match">
-                <% for(let j = 0; j < matchesArray[i].participantIdentities.length; j++){
-                    if(matchesArray[i].participantIdentities[j].player.accountId === summoner.accountId){
-                        console.log(matchesArray[i].participants[j]);%>
-
-                <div class="match-container win-<%=matchesArray[i].participants[j].stats.win%>">
-                    <div class="champ" data-champ="<%= matchesArray[i].participants[j].championId%>">
-                         <%= matchesArray[i].participants[j].championId%>
-                    </div>
-                    <div class="spell-container">
-                        <div class="spell" data-spell="<%= matchesArray[i].participants[j].spell1Id%>"><%= matchesArray[i].participants[j].spell1Id%></div>
-                        <div class="spell" data-spell="<%= matchesArray[i].participants[j].spell2Id%>"><%= matchesArray[i].participants[j].spell2Id%></div>
-                    </div>
-                    <div class="kda">
-                        <div><%=matchesArray[i].participants[j].stats.kills%>/<%=matchesArray[i].participants[j].stats.deaths%>/<%=matchesArray[i].participants[j].stats.assists%></div>
-                        <div>KDA <%=parseFloat(Math.round(((matchesArray[i].participants[j].stats.kills+matchesArray[i].participants[j].stats.assists)/matchesArray[i].participants[j].stats.deaths)*100)/100).toFixed(2)%></div>
-                    </div>
-                    <div class="items">
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item0%>"><%= matchesArray[i].participants[j].stats.item0%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item1%>"><%= matchesArray[i].participants[j].stats.item1%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item2%>"><%= matchesArray[i].participants[j].stats.item2%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item3%>"><%= matchesArray[i].participants[j].stats.item3%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item4%>"><%= matchesArray[i].participants[j].stats.item4%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item5%>"><%= matchesArray[i].participants[j].stats.item5%></div>
-                        <div class="item" data-item="<%= matchesArray[i].participants[j].stats.item6%>"><%= matchesArray[i].participants[j].stats.item6%></div>
-                    </div>
-                    <button class="more more-<%=matchesArray[i].participants[j].stats.win%>">&#43;</button>
-                </div>
-                <div class="hidden-match-data">
-
-                </div>
-                <%}}%>
-
-            </div>
-            <%} %>
+                        </div>
+                        <%} %>
         </div>
     </div>
 
@@ -70,9 +80,13 @@
         j.ajaxSetup({
             cache: false
         });
+        var hiddenData = j('.hidden-match-data');
+        var moreBtn = j('.more');
         getItemImages();
         getChampImages();
         getSummonerSpells();
+        hiddenData.hide();
+
 //        matchesProcessed = 0;
 //        var matches = j('.matches');
 //        var searchId = j('.id-holder');
@@ -180,6 +194,13 @@
                     }
                 });
         }
+        moreBtn.click(function(){
+            hiddenData.each(index => {
+                if(hiddenData[index].dataset.divid === this.dataset.btn){
+                    j(hiddenData[index]).slideToggle(500);
+                }
+        })
+        })
 //
     });
 </script>

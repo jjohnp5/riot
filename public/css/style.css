@@ -1,3 +1,10 @@
+body{
+    box-sizing: border-box;;
+}
+p{
+    padding: 0;
+    margin: 0;
+}
 .main-container{
     display: flex;
     justify-content: space-between;
@@ -11,30 +18,48 @@
     flex-basis: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .match-container{
     display: flex;
     justify-content: space-evenly;
+    align-content: center;
     align-items: center;
+    min-height: 75px;
+}
+.match{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
     margin-top: 25px;
 }
+
 .champ{
     flex-basis: 20%;
+    max-height: 60px;
+}
+img{
+    box-sizing: border-box;
+    max-height: inherit;
+    border-radius: 10px;
+    padding: 0 5px;
 }
 .spell-container{
     flex-basis: 20%;
     display: flex;
 }
+.spell{
+    max-height: 40px;
+}
 .items{
     flex-basis: 60%;
     display: flex;
     justify-content: flex-start;
+    max-height: 50px;
 }
-.items div, .items img{
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
+.item{
+    max-height: 40px;
 }
 .more{
     border: none;
@@ -54,4 +79,18 @@
 }
 .more-false{
     background-color: #B9150B;
+}
+.team-100 .champ, .team-200 .champ{
+    max-height: 25px;
+    margin-top: 5px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.team-100{
+    background-color: cornflowerblue;
+
+}
+.team-200{
+    background-color: #ED271B;
+
 }
