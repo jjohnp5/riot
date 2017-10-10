@@ -1,9 +1,56 @@
 <html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body, html{
+            height: 100%;
+            width: 100%;
+        }
+        body{
+            color: gainsboro;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: grey;
+            background-image: url("img/bg.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+        form{
+            height: 100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .box{
+            border: solid 1px black;
+            border-radius: 5px;
+            height: 40px;
+            width: 30%;
+            padding: 7px;
+        }
+        .box:focus{
+            outline: groove red 1px;
+        }
+        .button{
+            width: 15%;
+            height: 35px;
+            background-color: #bada55;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head>
 <body>
-<h1>Hi There</h1>
+<h1>NA ONLY: Search Summoner Name</h1>
 <form action="/summoner" method="get">
-    <input type="text" name="summonername" />
-    <input type="submit" value="Submit">
+    <input class="box" type="text" name="summonername" />
+    <input class="button" type="submit" value="Search">
 </form>
 </body>
 </html>

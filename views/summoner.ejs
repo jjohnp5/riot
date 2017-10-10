@@ -52,6 +52,11 @@
                             <%}}%>
 
                             <div class="hidden-match-data" data-divid="<%=matchesArray[k].gameId%>">
+                                <div class="match-pagination">
+                                    <div>MatchInfo</div>
+                                    <div>Timeline</div>
+                                    <div>SpecialInfo</div>
+                                </div>
                                 <% for(let h = 0; h < matchesArray[k].participants.length; h++){
                                     if(matchesArray[k].participants[h].teamId === 100){%>
                                     <div class="team-100">
@@ -82,6 +87,7 @@
         });
         var hiddenData = j('.hidden-match-data');
         var moreBtn = j('.more');
+        var moreMinimized = true;
         getItemImages();
         getChampImages();
         getSummonerSpells();
@@ -197,7 +203,18 @@
         moreBtn.click(function(){
             hiddenData.each(index => {
                 if(hiddenData[index].dataset.divid === this.dataset.btn){
-                    j(hiddenData[index]).slideToggle(500);
+                    moreData = j(hiddenData[index])
+                    moreData.slideToggle(500);
+                    console.log(this.attributes);
+                    moreData.addClass(this.classList[1]);
+                    if(moreMinimized){
+                        this.textContent = "-";
+                        moreMinimized = false;
+                    }else{
+                        this.textContent = "+";
+                        moreMinimized = true;
+                    }
+
                 }
         })
         })

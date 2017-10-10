@@ -67,6 +67,7 @@ img{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    outline: none;
 }
 .win-true{
     background-color: #bada55;
@@ -92,5 +93,11 @@ img{
 }
 .team-200{
     background-color: #ED271B;
-
+}
+.match-pagination{
+    display: flex;
+    margin-left: 100px;
+}
+.match-pagination div{
+    padding: 0 1em;
 }
