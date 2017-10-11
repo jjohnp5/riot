@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Mukta:400,600" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,8 +26,11 @@
                             <% for(let j = 0; j < matchesArray[k].participantIdentities.length; j++){
                                 if(matchesArray[k].participantIdentities[j].player.accountId === summoner.accountId){
                                     %>
-                                    <div><p>Match created: <%=new Date(matchesArray[k].gameCreation).toDateString()%></p></div>
+                                    <div><p>Match created: <%=new Date(matchesArray[k].gameCreation).toLocaleDateString()%></p></div>
                                     <div class="match-container win-<%=matchesArray[k].participants[j].stats.win%>">
+                                        <div class="queue">
+                                            <p><%= queues[matchesArray[k].queueId]%></p>
+                                        </div>
                                         <div class="champ" data-champ="<%= matchesArray[k].participants[j].championId%>">
                                              <%= matchesArray[k].participants[j].championId%>
                                         </div>
@@ -47,11 +51,11 @@
                                             <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item5%>"><%= matchesArray[k].participants[j].stats.item5%></div>
                                             <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item6%>"><%= matchesArray[k].participants[j].stats.item6%></div>
                                         </div>
-                                        <button class="more more-<%=matchesArray[k].participants[j].stats.win%>" data-btn="<%=matchesArray[k].gameId%>">&#43;</button>
+                                        <button class="more more-<%=matchesArray[k].participants[j].stats.win%>" data-btn="<%=matchesArray[k].gameId%>" >&#43;</button>
                                     </div>
                             <%}}%>
 
-                            <div class="hidden-match-data" data-divid="<%=matchesArray[k].gameId%>">
+                            <div class="hidden-match-data" data-divid="<%=matchesArray[k].gameId%>" data-minimized="true">
                                 <div class="match-pagination">
                                     <div>MatchInfo</div>
                                     <div>Timeline</div>
@@ -60,11 +64,57 @@
                                 <% for(let h = 0; h < matchesArray[k].participants.length; h++){
                                     if(matchesArray[k].participants[h].teamId === 100){%>
                                     <div class="team-100">
+                                        <div class="player"><%=matchesArray[k].participantIdentities[h].player.summonerName%></div>
                                         <div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div>
+                                        <div class="kda">
+                                            <div><%=matchesArray[k].participants[h].stats.kills%>/<%=matchesArray[k].participants[h].stats.deaths%>/<%=matchesArray[k].participants[h].stats.assists%></div>
+                                            <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
+                                        </div>
+                                        <div class="dmg-dealt">
+                                            <p>TDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions%></p>
+                                            <p>PDmg: <%=matchesArray[k].participants[h].stats.physicalDamageDealtToChampions%></p>
+                                            <p>MDmg: <%=matchesArray[k].participants[h].stats.magicDamageDealtToChampions%></p>
+                                        </div>
+                                        <div class="hidden-spell-container">
+                                            <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>
+                                            <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell2Id%>"><%= matchesArray[k].participants[h].spell2Id%></div>
+                                        </div>
+                                        <div class="hidden-items">
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item0%>"><%= matchesArray[k].participants[h].stats.item0%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item1%>"><%= matchesArray[k].participants[h].stats.item1%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item2%>"><%= matchesArray[k].participants[h].stats.item2%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item3%>"><%= matchesArray[k].participants[h].stats.item3%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item4%>"><%= matchesArray[k].participants[h].stats.item4%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item5%>"><%= matchesArray[k].participants[h].stats.item5%></div>
+                                        <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item6%>"><%= matchesArray[k].participants[h].stats.item6%></div>
+                                        </div>
                                     </div>
                                     <%}else{%>
                                 <div class="team-200">
+                                    <div class="player"><%=matchesArray[k].participantIdentities[h].player.summonerName%></div>
                                     <div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div>
+                                    <div class="kda">
+                                        <div><%=matchesArray[k].participants[h].stats.kills%>/<%=matchesArray[k].participants[h].stats.deaths%>/<%=matchesArray[k].participants[h].stats.assists%></div>
+                                        <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
+                                    </div>
+                                    <div class="dmg-dealt">
+                                        <p>TDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions%></p>
+                                        <p>PDmg: <%=matchesArray[k].participants[h].stats.physicalDamageDealtToChampions%></p>
+                                        <p>MDmg: <%=matchesArray[k].participants[h].stats.magicDamageDealtToChampions%></p>
+                                    </div>
+                                    <div class="hidden-spell-container"><p>
+                                        <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>
+                                        <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell2Id%>"><%= matchesArray[k].participants[h].spell2Id%></div>
+                                    </div>
+                                    <div class="hidden-items">
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item0%>"><%= matchesArray[k].participants[h].stats.item0%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item1%>"><%= matchesArray[k].participants[h].stats.item1%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item2%>"><%= matchesArray[k].participants[h].stats.item2%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item3%>"><%= matchesArray[k].participants[h].stats.item3%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item4%>"><%= matchesArray[k].participants[h].stats.item4%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item5%>"><%= matchesArray[k].participants[h].stats.item5%></div>
+                                    <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item6%>"><%= matchesArray[k].participants[h].stats.item6%></div>
+                                    </div>
                                 </div>
                                     <%}}%>
                             </div>
@@ -87,7 +137,6 @@
         });
         var hiddenData = j('.hidden-match-data');
         var moreBtn = j('.more');
-        var moreMinimized = true;
         getItemImages();
         getChampImages();
         getSummonerSpells();
@@ -189,6 +238,10 @@
                     allTables = j('.item')
                     keys = Object.keys(result.data);
                     for(var i = 0; i < allTables.length; i++){
+                        if(allTables[i].dataset.item === "0"){
+                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/3637.png" alt="spell">`
+                            allTables[i].innerHTML = imgTag;
+                        }
                         for(var k = 0; k < keys.length; k++){
 
                             if(keys[k] === allTables[i].dataset.item){
@@ -201,21 +254,30 @@
                 });
         }
         moreBtn.click(function(){
+            moreBtn.each(index =>{
+                moreBtn[index].textContent = "+";
+                console.log(moreBtn[index].dataset.minimized);
+            })
             hiddenData.each(index => {
+                moreData = j(hiddenData[index]);
+
                 if(hiddenData[index].dataset.divid === this.dataset.btn){
-                    moreData = j(hiddenData[index])
-                    moreData.slideToggle(500);
-                    console.log(this.attributes);
                     moreData.addClass(this.classList[1]);
-                    if(moreMinimized){
+                    if(hiddenData[index].dataset.minimized === "true"){
+                        moreData.slideDown(500);
                         this.textContent = "-";
-                        moreMinimized = false;
+                        hiddenData[index].dataset.minimized = "false";
                     }else{
+                        moreData.slideUp();
                         this.textContent = "+";
-                        moreMinimized = true;
+                        hiddenData[index].dataset.minimized = "true";
                     }
 
+                }else {
+                    moreData.slideUp();
+                    hiddenData[index].dataset.minimized = "true";
                 }
+
         })
         })
 //

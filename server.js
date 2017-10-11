@@ -56,8 +56,8 @@ app.get('/summoner', function (req, res, next) {
 
                         });
                     promise.then(function(matchesArray){
-                                // console.log(matchesArray);
-                                res.render("summoner", {summoner: summoner, matchList: matchList, matchesArray: matchesArray});
+                                console.log(matchesArray);
+                                res.render("summoner", {summoner: summoner, matchList: matchList, matchesArray: matchesArray, queues: queues});
                             }).catch(function(error){
                                 console.log(error);
                             })
