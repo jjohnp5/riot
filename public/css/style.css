@@ -11,12 +11,13 @@ p{
     justify-content: space-between;
 
 }
+
 .profile-container{
-    flex-basis: 20%;
+    flex-basis: 10%;
     margin-right: 10px;
 }
 .matches-container{
-    flex-basis: 80%;
+    flex-basis: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -26,7 +27,7 @@ p{
     justify-content: space-evenly;
     align-content: center;
     align-items: center;
-    min-height: 75px;
+    min-height: 80px;
 }
 .match{
     display: flex;
@@ -34,6 +35,7 @@ p{
     justify-content: flex-start;
     align-content: flex-start;
     margin-top: 25px;
+    height: auto;
 }
 
 .champ{
@@ -143,4 +145,51 @@ img{
 }
 .match-pagination div{
     padding: 0 1em;
+}
+
+/*Media Queries*/
+@media screen and (max-width: 450px){
+    body{
+        font-size: .7em;
+        padding: 0;
+    }
+    .main-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        flex-wrap: nowrap;
+
+    }
+    .matches-container{
+        min-height: 250%;
+        flex-direction: column;
+        justify-content: stretch;
+        flex-wrap: nowrap;
+    }
+    .hidden-match-data{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .match{
+        margin-top: 10px;
+    }
+    .champ{
+        max-height: 25px;
+    }
+    .hidden-match-data .champ{
+        max-height: 20px;
+    }
+    .hidden-items .item{
+        max-height: 15px;
+    }
+    .item{
+        max-height: 20px;
+    }
+    .hidden-spell-container .spell{
+        max-height: 15px;
+    }
+    .spell{
+        max-height: 20px;
+    }
 }

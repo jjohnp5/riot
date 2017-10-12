@@ -63,7 +63,6 @@ app.get('/summoner', function (req, res, next) {
                             })
                     })
 
-
                 //
         }).catch(function(error){
             console.log(error);
