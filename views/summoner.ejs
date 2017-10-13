@@ -13,7 +13,7 @@
         <div class="profile-container">
             <img class="profile-pic" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/profileicon/<%=summoner.profileIconId%>.png">
             <div>
-                <h3><%=summoner.name%></h3>
+                <h2><%=summoner.name%></h2>
                 <h4><%=summoner.summonerLevel%></h4>
             </div>
 
@@ -39,8 +39,8 @@
                                             <div class="spell" data-spell="<%= matchesArray[k].participants[j].spell2Id%>"><%= matchesArray[k].participants[j].spell2Id%></div>
                                         </div>
                                         <div class="kda">
-                                            <div><%=matchesArray[k].participants[j].stats.kills%>/<%=matchesArray[k].participants[j].stats.deaths%>/<%=matchesArray[k].participants[j].stats.assists%></div>
-                                            <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[j].stats.kills+matchesArray[k].participants[j].stats.assists)/matchesArray[k].participants[j].stats.deaths)*100)/100).toFixed(2)%></div>
+                                            <div><p><%=matchesArray[k].participants[j].stats.kills%>/<%=matchesArray[k].participants[j].stats.deaths%>/<%=matchesArray[k].participants[j].stats.assists%></p></div>
+                                            <div><p>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[j].stats.kills+matchesArray[k].participants[j].stats.assists)/matchesArray[k].participants[j].stats.deaths)*100)/100).toFixed(2)%></p></div>
                                         </div>
                                         <div class="items">
                                             <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item0%>"><%= matchesArray[k].participants[j].stats.item0%></div>
@@ -71,7 +71,7 @@
                                             <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
                                         </div>
                                         <div class="dmg-dealt">
-                                            <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions%></p>
+                                            <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
                                         </div>
                                         <div class="hidden-spell-container">
                                             <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>
@@ -96,7 +96,7 @@
                                         <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
                                     </div>
                                     <div class="dmg-dealt">
-                                        <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions%></p>
+                                        <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
                                     </div>
                                     <div class="hidden-spell-container"><p>
                                         <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>

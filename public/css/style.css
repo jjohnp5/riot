@@ -3,20 +3,41 @@ body{
     font-family: 'Mukta', sans-serif;
 }
 p{
+    font-size: .8em;
     padding: 0;
     margin: 0;
 }
 .main-container{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
 
 }
 
 .profile-container{
+    align-self: center;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
     flex-basis: 10%;
     margin-right: 10px;
 }
+.profile-pic{
+    max-height: 100px;
+}
+h2{
+    margin: 0;
+    padding: 0;
+}
+h4{
+    text-align: center;
+    margin: 0;
+    padding:0;
+}
 .matches-container{
+    min-height: 250%;
     flex-basis: 90%;
     display: flex;
     flex-direction: column;
@@ -34,7 +55,6 @@ p{
     flex-direction: column;
     justify-content: flex-start;
     align-content: flex-start;
-    margin-top: 25px;
     height: auto;
 }
 
@@ -114,7 +134,7 @@ img{
     flex-basis: 20%;
 }
 .dmg-dealt{
-    font-size: .7em;
+    font-size: .9em;
     flex-basis: 20%;
     display: flex;
     flex-direction: column;
@@ -150,7 +170,7 @@ img{
 /*Media Queries*/
 @media screen and (max-width: 450px){
     body{
-        font-size: .7em;
+        font-size: .8em;
         padding: 0;
     }
     .main-container{
@@ -160,8 +180,11 @@ img{
         flex-wrap: nowrap;
 
     }
+    .profile-container{
+        align-self: center;
+    }
     .matches-container{
-        min-height: 250%;
+        min-height: 225%;
         flex-direction: column;
         justify-content: stretch;
         flex-wrap: nowrap;
