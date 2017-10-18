@@ -11,8 +11,8 @@ Node.js
 ExpressJS
 Axios
 EJS
+Body-parser
 Request - about to be removed. All API calls will be done through Axios.
-Body-parser for Request - about to be removed upon removal of Request API
 ```
 
 ### Author
