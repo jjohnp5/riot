@@ -7,7 +7,7 @@ var path = require('path');
 var axios = require('axios');
 var dotenv = require('dotenv');
 var queues = require('./queues.json');
-
+var fs = require('fs'); // temporary  -  for obtaining JSON locally - ashwins93
 
 
 dotenv.config({path: '.env'});
@@ -138,6 +138,32 @@ app.get('/matches/timelines/:match', function (req, res) {
         }
     })
 })
+
+/*
+ *  Add /calculator route, obtain data from local json file temporarily 
+ *   
+ *  Todo: Substitute with real API
+ *
+ *  - ashwins93
+ */
+
+app.get('/calculator', function(req,res) {
+    fs.readFile(path.join(__dirname, 'public','items.json'), 'utf-8',function(err, data) {
+        if (err) console.error(err);
+        else {
+            let itemData = JSON.parse(data.toString());
+            // console.log(Object.keys(itemData.data).length);
+            var query = req.query;
+            if(query && query.type === "json" ) {
+                res.json(itemData.data);
+            } else {
+                res.render("calculator", {data: itemData.data });
+            }
+        }
+    });
+
+})
+
 
 
 app.listen(process.env.PORT || 3000, function () {
