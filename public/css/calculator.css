@@ -1,0 +1,39 @@
+.card-img-top {
+	width: 64px;
+	height: 64px;
+	margin: 11px;
+	text-align: center;
+}
+
+.list-group-item {
+	padding: 0.2rem 0.1rem;
+}
+
+.card {
+	width: 96px;
+	cursor: pointer;
+}
+
+.item-list {
+	height: 60vh;
+	overflow-y:  auto;
+	overflow-x: hidden;
+}
+
+.card-img-overlay {
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	text-align: center;
+	z-index: 2;
+	display: none;
+}
+
+.gold-display {
+	text-align: center;
+	margin: auto;
+	font-size: 2rem;
+}
+
+.main {
+	background: #f1f1f1;
+}
