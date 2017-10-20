@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<title>Build Caclulator</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,7 +38,7 @@
 				</div>
 				<div id="all" class="item-list">
 					<% for(var i in data) { %>
-						<div id="<%= data[i].id%>" class="card p-1 mb-2 d-inline-block">
+						<div id="<%= data[i].id%>" class="card p-1 m-2 d-inline-block">
 							<% var imgSrc = "http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/" + data[i].image.full %>
 							
 							<img src="<%= imgSrc%>" data-toggle="tooltip" class="card-img-top"

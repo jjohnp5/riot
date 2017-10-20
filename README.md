@@ -5,6 +5,7 @@ Create a op.gg copy of pulling API data from Riot's complex API. Use of Promises
 ```
 HTML5
 CSS3 with Flexbox
+Bootstrap 4
 Javascript
 jQuery
 Node.js

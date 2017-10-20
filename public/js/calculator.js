@@ -48,46 +48,46 @@ function main($, data) {
 
 	// Utility functions
 	function setUp() {
-		$(".card").appendTo(poolItemsContainer);
+		$("#selected .card").remove();
 		$(".card").off('click');
 		//$(".items-data .card-img-overlay").show();
 
 		updateOverlay();
 
-		$(".card" ).one('click', function selectCard() {
+		$(".card" ).on('click', function selectCard() {
 			var id = $(this).attr('id');
 			// console.log(data[id].gold.total, availableGold)
 			if( data[id].gold.total <= availableGold) {
 				selectedItems.push(id);
-				poolItems.splice(poolItems.indexOf(id), 1);
 				// console.log(selectedItems);
-				$(this).appendTo(selectedItemsContainer);
+				$(this).clone()
+						.off()
+					  	.one('click', function removeCard() {
+							var id = $(this).attr('id');
+							availableGold += data[id].gold.total;
+							availableGoldContainer.text(availableGold)
+							$(this).remove();
+							selectedItems.splice(selectedItems.indexOf(id, 1));
+							updateOverlay();
+							// console.log(selectedItems);
+						})
+					   .appendTo(selectedItemsContainer);
 				availableGold -= data[id].gold.total;
 				availableGoldContainer.text(availableGold)
 				updateOverlay();
-				$(this).one('click', function removeCard() {
-					var id = $(this).attr('id');
-					availableGold += data[id].gold.total;
-					availableGoldContainer.text(availableGold)
-					$(this).appendTo(poolItemsContainer);
-					selectedItems.splice(selectedItems.indexOf(id, 1));
-					poolItems.push(id);
-					updateOverlay();
-					// console.log(selectedItems);
-				});
 			}
 		});
 	}
 
 	function updateOverlay() {
-		console.log(selectedItems);
+		// console.log(selectedItems);
 		for(var i in poolItems) {
 			var id = poolItems[i];
 
 			if( data[id].gold.total <= availableGold ) {
 				$("#" + id + " .card-img-overlay").hide();
 			} else {
-				console.log("Removed: " + id)
+				// console.log("Removed: " + id)
 				$("#" + id + " .card-img-overlay").show();
 			}
 		}
