@@ -17,14 +17,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", path.join(__dirname, '/views'));
 app.use(express.static(__dirname + "/public"));
 
-
+/*
+    *
+    *
+    *
+ */
 app.get('/', function(req, res){
     res.render('index');
 });
 
 app.get('/summoner', function (req, res, next) {
-    // var summoner = null;
-    // var matchList = null;
 
     axios("https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"+req.query.summonername+"?api_key="+process.env.API_KEY)
         .then(function(response){
@@ -56,7 +58,9 @@ app.get('/summoner', function (req, res, next) {
 
                         });
                     promise.then(function(matchesArray){
-                                console.log(matchesArray);
+                                console.log(matchesArray[0]);
+                                console.log(matchList.matches[0]);
+                                console.log(summoner);
                                 res.render("summoner", {summoner: summoner, matchList: matchList, matchesArray: matchesArray, queues: queues});
                             }).catch(function(error){
                                 console.log(error);
@@ -67,35 +71,8 @@ app.get('/summoner', function (req, res, next) {
         }).catch(function(error){
             console.log(error);
     })
-
-
-   // request("https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"+req.query.summonername+"?api_key="+process.env.API_KEY, function (err, response, body) {
-   //     if(!err && response.statusCode === 200){
-   //         result = JSON.parse(body);
-   //         request("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+result.accountId+"/recent?api_key="+process.env.API_KEY, function (err, response, match) {
-   //             if(!err && response.statusCode === 200) {
-   //                 matches = JSON.parse(match);
-   //                 res.render("summoner", {result: result, matches: matches, queues: queues});
-   //
-   //             }else{
-   //                 console.log(response.statusCode);
-   //             }
-   //             });
-   //             }else{
-   //         console.log(response.statusCode);
-   //     }
-   //         });
    });
-// app.get("/matches/:id", function(req, res){
-//     request("https://na1.api.riotgames.com/lol/match/v3/matches/" + req.params.id + "?api_key=" + process.env.API_KEY, function (err, response, match) {
-//         if (!err && response.statusCode === 200) {
-//                 data = JSON.parse(match);
-//                 res.send(data);
-//             }else {
-//             res.sendStatus(response.statusCode);
-//         }
-//         })
-// });
+
 
 app.get('/summoner/spells', function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/summoner.json", function (err, response, spells) {
