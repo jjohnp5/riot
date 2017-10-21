@@ -7,6 +7,9 @@ var path = require('path');
 var axios = require('axios');
 var dotenv = require('dotenv');
 var queues = require('./queues.json');
+var session = require('express-session');
+var sessionHolder;
+
 var fs = require('fs'); // temporary  -  for obtaining JSON locally - ashwins93
 
 
@@ -16,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("views", path.join(__dirname, '/views'));
 app.use(express.static(__dirname + "/public"));
+app.use(session({secret: 'riotimizer', resave: false, saveUninitialized: true}));
 
 /*
     *
@@ -23,10 +27,11 @@ app.use(express.static(__dirname + "/public"));
     *
  */
 app.get('/', function(req, res){
+    sessionHolder = req.session.id; //upon visiting the site, session gets created and stored.
     res.render('index');
 });
 
-app.get('/summoner', function (req, res, next) {
+app.get('/summoner', isSessionExists, function (req, res) {
 
     axios("https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/"+req.query.summonername+"?api_key="+process.env.API_KEY)
         .then(function(response){
@@ -141,6 +146,21 @@ app.get('/calculator', function(req,res) {
 
 })
 
+/*
+ *  Middleware for session. need to be added to main routes to prevent API abuse. No need to add this to
+ *  /summoner + /items, /spells, /champs
+ *
+ *  Those routes use an unlimited API call to riot's static data server.
+ *
+ *
+ *
+ *  */
+function isSessionExists(req, res, next){
+    if(sessionHolder && sessionHolder === req.session.id){
+        return next();
+    }
+    res.redirect("/");
+}
 
 
 app.listen(process.env.PORT || 3000, function () {
