@@ -79,7 +79,7 @@ app.get('/summoner', isSessionExists, function (req, res) {
    });
 
 
-app.get('/summoner/spells', function (req, res) {
+app.get('/summoner/spells', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/summoner.json", function (err, response, spells) {
         if(!err && response.statusCode === 200){
             spell = JSON.parse(spells)
@@ -90,7 +90,7 @@ app.get('/summoner/spells', function (req, res) {
         }
     })
 })
-app.get('/summoner/champs', function (req, res) {
+app.get('/summoner/champs', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/champion.json", function (err, response, champs) {
         if(!err && response.statusCode === 200){
             champ = JSON.parse(champs);
@@ -100,7 +100,7 @@ app.get('/summoner/champs', function (req, res) {
         }
     })
 })
-app.get('/summoner/items', function (req, res) {
+app.get('/summoner/items', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/item.json", function (err, response, champs) {
         if(!err && response.statusCode === 200){
             champ = JSON.parse(champs);
@@ -110,7 +110,7 @@ app.get('/summoner/items', function (req, res) {
         }
     })
 })
-app.get('/matches/timelines/:match', function (req, res) {
+app.get('/matches/timelines/:match', isSessionExists,function (req, res) {
     request("https://na1.api.riotgames.com/lol/match/v3/timelines/by-match/"+req.params.match+"?api_key="+process.env.API_KEY, function (err, response, timelines) {
         if(!err && response.statusCode === 200){
             timeline = JSON.parse(timelines);
@@ -159,7 +159,7 @@ function isSessionExists(req, res, next){
     if(sessionHolder && sessionHolder === req.session.id){
         return next();
     }
-    res.redirect("/");
+    res.render("unauthenticated");
 }
 
 
