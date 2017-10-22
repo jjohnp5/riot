@@ -10,7 +10,6 @@ var queues = require('./queues.json');
 var session = require('express-session');
 var sessionHolder;
 
-var fs = require('fs'); // temporary  -  for obtaining JSON locally - ashwins93
 
 
 dotenv.config({path: '.env'});
@@ -129,22 +128,20 @@ app.get('/matches/timelines/:match', isSessionExists,function (req, res) {
  *  - ashwins93
  */
 
-app.get('/calculator', function(req,res) {
-    fs.readFile(path.join(__dirname, 'public','items.json'), 'utf-8',function(err, data) {
-        if (err) console.error(err);
-        else {
-            let itemData = JSON.parse(data.toString());
-            // console.log(Object.keys(itemData.data).length);
+app.get('/calculator', isSessionExists,function(req,res) {
+    axios("https://na1.api.riotgames.com/lol/static-data/v3/items?locale=en_US&tags=all&api_key="+process.env.API_KEY)
+        .then(function(response){
+            let itemData = response.data;
             var query = req.query;
             if(query && query.type === "json" ) {
                 res.json(itemData.data);
             } else {
                 res.render("calculator", {data: itemData.data });
             }
-        }
+        }).catch(function(err){
+            console.log(err);
     });
-
-})
+});
 
 /*
  *  Middleware for session. need to be added to main routes to prevent API abuse. No need to add this to
