@@ -62,13 +62,13 @@ var guideSchema = new mongoose.Schema({
     }
 })
 var Guides = mongoose.model('Guides', guideSchema);
-Guides.create(data, function (err, guide) {
-    if(err){
-        console.log(err);
-    }else{
-        console.log(guide);
-    }
-})
+// Guides.create(data, function (err, guide) {
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log(guide);
+//     }
+// })
 
 dotenv.config({path: '.env'});
 
@@ -84,6 +84,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
+    next();
 })
 
 //seedDB
@@ -197,7 +198,7 @@ app.get('/matches/timelines/:match', isSessionExists,function (req, res) {
  *  - ashwins93
  */
 
-app.get('/calculator', isSessionExists,function(req,res) {
+app.get('/calculator', isLoggedIn,function(req,res) {
     axios("https://na1.api.riotgames.com/lol/static-data/v3/items?locale=en_US&tags=all&api_key="+process.env.API_KEY)
         .then(function(response){
             let itemData = response.data;
@@ -223,10 +224,11 @@ app.get('/register', isSessionExists, function (req, res) {
     res.render('register');
 })
 
-app.post('register', function (req, res) {
+app.post('/register', function (req, res) {
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function (err, user) {
         if(err){
+            console.log(err);
             return res.redirect("/register");
         }
         passport.authenticate('local')(req, res, function () {
@@ -248,9 +250,9 @@ app.post('/login', passport.authenticate('local', {
     });
 
 //LOGOUT ROUTE
-app.get('/logout', function (req, res) {
+app.get('/logout', isLoggedIn,function (req, res) {
     req.logout();
-    res.redirect('/builds');
+    res.redirect('/');
 })
 
 /*
@@ -270,7 +272,7 @@ app.get('/builds', function (req, res) {
 })
 //We will add middleware later once authentication, I'm just building routes at the moment. Running low on time.
 //Items will be sent as JSON.stringify and parsed as JSON on the backend.
-app.post('/builds', function (req, res) {
+app.post('/builds', isLoggedIn,function (req, res) {
     var title = req.title;
     var champion = req.champion;
     var items = JSON.parse(req.items);
@@ -310,7 +312,12 @@ function isSessionExists(req, res, next){
     res.render("unauthenticated");
 }
 
-
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 
 app.listen(process.env.PORT || 3000, function () {

@@ -1,1 +1,75 @@
-<h1>REGISTER GET ROUTE</h1>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Mukta:400,600" rel="stylesheet">
+    <style>
+        body, html{
+            height: 100%;
+            width: 100%;
+        }
+        body{
+            font-family: 'Mukta', sans-serif;
+            color: gainsboro;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f1f1f1;
+            background-size: cover;
+            background-position: center;
+        }
+        form{
+            height: 100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .box{
+            border: solid 1px black;
+            border-radius: 5px;
+            height: 40px;
+            width: 30%;
+            padding: 7px;
+        }
+        .box:focus{
+            outline: groove red 1px;
+        }
+        .button{
+            width: 15%;
+            height: 35px;
+            background-color: #bada55;
+            border-radius: 5px;
+            border: none;
+        }
+        @media screen and (max-width: 1000px){
+            .box{
+                width: 60%;
+            }
+            .button{
+                width: 30%;
+            }
+        }
+        @media screen and (max-width: 520px) {
+            .box{
+                width: 80%;
+            }
+            .button{
+                width: 40%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<h1>Register for an Account.</h1>
+<form action="/register" method="post">
+    <input class="box" type="text" name="username" />
+    <input class="box" type="password" name="password" />
+    <input class="button" type="submit" value="Register">
+</form>
+</body>
+</html>
