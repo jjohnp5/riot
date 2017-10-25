@@ -34,6 +34,7 @@ Model will have all the metadata. Kind of like an interface to the data. Model w
    - Champion Blurb
    - Champion Image
    - Spells(array of spell IDs)
+   - Item Slots (contains item IDs, limited to 6)
 
 ## Spells
 
@@ -44,3 +45,13 @@ Model will have all the metadata. Kind of like an interface to the data. Model w
    - Spell ID
    - Spell Image
    - Spell Description
+   
+## Items
+
+### Item Object
+
+ - Properties
+   - Item ID
+   - Item Name
+   - Item Description
+   - Item Image
