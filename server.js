@@ -17,6 +17,8 @@ var sessionHolder;
 //dummy data
 
 
+dotenv.config({path: '.env'});
+
 data = {
     title: "data1",
     champion: "datachamp",
@@ -35,7 +37,8 @@ data = {
 
  */
 //Connect to db
-mongoose.connect("mongodb://localhost/riotdb");
+
+mongoose.connect(process.env.DB_CONNECT);
 
 var userSchema = new mongoose.Schema({
     username: String,
@@ -70,7 +73,6 @@ var Guides = mongoose.model('Guides', guideSchema);
 //     }
 // })
 
-dotenv.config({path: '.env'});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
