@@ -149,8 +149,12 @@ app.get('/summoner', isSessionExists, function (req, res) {
     })
    });
 
+/*
+    *API ROUTES HERE
+ */
 
-app.get('/summoner/spells', isSessionExists,function (req, res) {
+//MODEL ARRAY OF SUMMONER SPELLS
+app.get('/api/spells', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/summoner.json", function (err, response, spells) {
         if(!err && response.statusCode === 200){
             spell = JSON.parse(spells)
@@ -161,7 +165,9 @@ app.get('/summoner/spells', isSessionExists,function (req, res) {
         }
     })
 })
-app.get('/summoner/champs', isSessionExists,function (req, res) {
+
+//MODEL ARRAY OF IN-GAME CHAMPIONS
+app.get('/api/champs', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/champion.json", function (err, response, champs) {
         if(!err && response.statusCode === 200){
             champ = JSON.parse(champs);
@@ -171,7 +177,9 @@ app.get('/summoner/champs', isSessionExists,function (req, res) {
         }
     })
 })
-app.get('/summoner/items', isSessionExists,function (req, res) {
+
+//MODEL ARRAY OF IN-GAME ITEMS
+app.get('/api/items', isSessionExists,function (req, res) {
     request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/item.json", function (err, response, champs) {
         if(!err && response.statusCode === 200){
             champ = JSON.parse(champs);
@@ -181,6 +189,25 @@ app.get('/summoner/items', isSessionExists,function (req, res) {
         }
     })
 })
+
+//MODEL OBJECT OF IN-GAME CHAMPIONS
+app.get('/api/champs/:id', isSessionExists,function (req, res) {
+    request("http://ddragon.leagueoflegends.com/cdn/"+process.env.PATCH_VERSION+"/data/en_US/champion/"+req.params.id+".json", function (err, response, champs) {
+        if(!err && response.statusCode === 200){
+            champ = JSON.parse(champs);
+            res.send(champ)
+        }else{
+            res.sendStatus(response.statusCode);
+        }
+    })
+})
+
+
+
+
+/*
+IGNORE THIS ROUTE. This Will be used in the /summoner route later. Not important at the moment.
+ */
 app.get('/matches/timelines/:match', isSessionExists,function (req, res) {
     request("https://na1.api.riotgames.com/lol/match/v3/timelines/by-match/"+req.params.match+"?api_key="+process.env.API_KEY, function (err, response, timelines) {
         if(!err && response.statusCode === 200){
@@ -216,10 +243,6 @@ app.get('/calculator', isLoggedIn,function(req,res) {
 });
 
 
-/*
-    Start Collab ROUTES here, we will use a different middle ware later. for now, we'll be using session middleware.
-
- */
 
 // REGISTER ROUTE
 app.get('/register', isSessionExists, function (req, res) {
@@ -299,12 +322,7 @@ app.post('/builds', isLoggedIn,function (req, res) {
 
 
 /*
- *  Middleware for session. need to be added to main routes to prevent API abuse. No need to add this to
- *  /summoner + /items, /spells, /champs
- *
- *  Those routes use an unlimited API call to riot's static data server.
- *
- *
+ *  MIDDLEWARES.
  *
  *  */
 function isSessionExists(req, res, next){
@@ -319,7 +337,7 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect("/login");
-};
+}
 
 
 app.listen(process.env.PORT || 3000, function () {

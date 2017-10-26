@@ -11,7 +11,7 @@ j(document).ready(function () {
     hiddenData.hide();
 
     function getSummonerSpells() {
-        j.ajax("/summoner/spells")
+        j.ajax("/api/spells")
             .done(function (result) {
                 allTables = j('.spell')
                 keys = Object.keys(result.data);
@@ -27,7 +27,7 @@ j(document).ready(function () {
             });
     }
     function getChampImages(){
-        j.ajax("/summoner/champs")
+        j.ajax("/api/champs")
             .done(function (result) {
                 allTables = j('.champ')
                 keys = Object.keys(result.data);
@@ -43,7 +43,7 @@ j(document).ready(function () {
             });
     }
     function getItemImages(){
-        j.ajax("/summoner/items")
+        j.ajax("/api/items")
             .done(function (result) {
                 allTables = j('.item')
                 keys = Object.keys(result.data);
