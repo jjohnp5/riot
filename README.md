@@ -17,13 +17,13 @@ Request - about to be removed. All API calls will be done through Axios.
 ```
 
 ### Author
-#### John Lagmay - full work.
+#### John Lagmay, Ashwin93.
 
 ### Contributions
-No Contributions at this time. I want to finish the project for stronger portfolio.
+No Contributions at this time. We want to finish the project for stronger portfolio.
 
 ### Acknowledgments
-#### Thank you for all the developers out there that make my life easy by creating these awesome framework used on this project!
+#### Thank you for all the developers out there that make our lives easy by creating these awesome frameworks used on this project!
 
 ### Link to live
 #### [RiotApi](http://leagueoflegendsapi.herokuapp.com).

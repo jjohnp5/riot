@@ -41,11 +41,12 @@ h4{
     padding:0;
 }
 .matches-container{
-    min-height: 200%;
+    min-height: 125%;
+    height: auto;
     flex-basis: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     flex-grow: 1;
 }
 .match-container{
@@ -226,4 +227,20 @@ tr, td{
     .player{
         font-size: .7em;
     }
+}
+
+/*TOOLTIP STYLES*/
+
+.tippy-tooltip.badass-theme{
+    background-color: rgba(241, 241, 241, 0.8);
+    border: 1px solid black;
+    max-width: 200px;
+}
+.tippy-tooltip.badassitems-theme{
+    background-color: rgba(241, 241, 241, 0.8);
+    border: 1px solid black;
+    max-width: 400px;
+}
+font{
+    font-size: 1em;
 }

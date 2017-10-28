@@ -112,32 +112,30 @@ app.get('/summoner', isSessionExists, function (req, res) {
         .then(function(data){
             axios("https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/"+data.accountId+"?endIndex=10&api_key="+process.env.API_KEY)
                 .then(function(matchlist){
-                    matchList = matchlist.data;
-                    // console.log(matchList);
+                   summoner.matchList = matchlist.data.matches;
+                    console.log(summoner.matchList);
                     // console.log(summoner);
-                    return matchlist.data;
+                    return summoner;
                 })
                 .then(function(matchdata){
                     let matchesArray = [];
                     matchCounter = 0;
                     var promise = new Promise(function(resolve, reject){
-                        matchdata.matches.forEach(match => {
+                        matchdata.matchList.forEach(function(match, index, arr){
                             axios("https://na1.api.riotgames.com/lol/match/v3/matches/" + match.gameId + "?api_key=" + process.env.API_KEY)
                                 .then(function(matchResult){
-                                    matchesArray[matchCounter] = matchResult.data;
+                                    summoner.matchList[index].matchInfo = matchResult.data;
                                     matchCounter++;
-                                    if(matchCounter === matchdata.matches.length){
-                                        resolve(matchesArray);
+                                    if(matchCounter === matchdata.matchList.length){
+                                        resolve(summoner);
                                     }
                                 })
                             })
 
                         });
-                    promise.then(function(matchesArray){
-                                console.log(matchesArray[0]);
-                                console.log(matchList.matches[0]);
+                    promise.then(function(summoner){
                                 console.log(summoner);
-                                res.render("summoner", {summoner: summoner, matchList: matchList, matchesArray: matchesArray, queues: queues});
+                                res.render("summoner", {summoner: summoner, queues: queues});
                             }).catch(function(error){
                                 console.log(error);
                             })

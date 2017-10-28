@@ -19,150 +19,151 @@
 
         </div>
         <div class="matches-container">
-            <%for(let i = 0; i < matchList.matches.length; i++){
-                for(let k = 0; k < matchesArray.length; k++){
-                    if(matchList.matches[i].gameId === matchesArray[k].gameId){%>
-                        <div class="match">
-                            <!-- this is to loop through and display initial match info for just the summoner -->
-                            <% for(let j = 0; j < matchesArray[k].participantIdentities.length; j++){
-                                if(matchesArray[k].participantIdentities[j].player.accountId === summoner.accountId){
-                                    %>
-                                    <div><p>Match created: <%=new Date(matchesArray[k].gameCreation).toLocaleString()%></p></div>
-                                    <div class="match-container win-<%=matchesArray[k].participants[j].stats.win%>">
-                                        <div class="queue">
-                                            <p><%= queues[matchesArray[k].queueId]%></p>
-                                        </div>
-                                        <div class="champ" data-champ="<%= matchesArray[k].participants[j].championId%>">
-                                             <%= matchesArray[k].participants[j].championId%>
-                                        </div>
-                                        <div class="spell-container">
-                                            <div class="spell" data-spell="<%= matchesArray[k].participants[j].spell1Id%>"><%= matchesArray[k].participants[j].spell1Id%></div>
-                                            <div class="spell" data-spell="<%= matchesArray[k].participants[j].spell2Id%>"><%= matchesArray[k].participants[j].spell2Id%></div>
-                                        </div>
-                                        <div class="kda">
-                                            <div><p><%=matchesArray[k].participants[j].stats.kills%>/<%=matchesArray[k].participants[j].stats.deaths%>/<%=matchesArray[k].participants[j].stats.assists%></p></div>
-                                            <div><p>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[j].stats.kills+matchesArray[k].participants[j].stats.assists)/matchesArray[k].participants[j].stats.deaths)*100)/100).toFixed(2)%></p></div>
-                                        </div>
-                                        <div class="items">
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item0%>"><%= matchesArray[k].participants[j].stats.item0%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item1%>"><%= matchesArray[k].participants[j].stats.item1%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item2%>"><%= matchesArray[k].participants[j].stats.item2%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item3%>"><%= matchesArray[k].participants[j].stats.item3%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item4%>"><%= matchesArray[k].participants[j].stats.item4%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item5%>"><%= matchesArray[k].participants[j].stats.item5%></div>
-                                            <div class="item" data-item="<%= matchesArray[k].participants[j].stats.item6%>"><%= matchesArray[k].participants[j].stats.item6%></div>
-                                        </div>
-                                        <button class="more more-<%=matchesArray[k].participants[j].stats.win%>" data-btn="<%=matchesArray[k].gameId%>" >&#43;</button>
-                                    </div>
-                            <%}}%>
-                            <!-- end Summoner info loop -->
-                            <div class="hidden-match-data" data-divid="<%=matchesArray[k].gameId%>" data-minimized="true">
-                                <div class="match-pagination">
-                                    <div data-toggle="match_info">MatchInfo</div>
-                                    <div data-toggle="timeline">Timeline</div>
-                                    <div data-toggle="specials">SpecialInfo</div>
+            <%for(let i = 0; i < summoner.matchList.length; i++){%>
+                <div class="match">
+                    <%for(let k = 0; k < summoner.matchList[i].matchInfo.participantIdentities.length; k++){
+                        if(summoner.matchList[i].matchInfo.participantIdentities[k].player.accountId === summoner.accountId){ %>
+                            <div><p>Match created: <%=new Date(summoner.matchList[i].matchInfo.gameCreation).toString()%></p></div>
+                            <div class="match-container win-<%=summoner.matchList[i].matchInfo.participants[k].stats.win%>">
+                                <div class="queue">
+                                    <p><%= queues[summoner.matchList[i].matchInfo.queueId]%></p>
                                 </div>
-                                <!-- Start Loop for summoners per match -->
-                                <table cellspacing="0" cellpadding="0" align="left">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Champion</th>
-                                        <th>KDA</th>
-                                        <th>Damage</th>
-                                        <th>Spells</th>
-                                        <th>Items</th>
-                                    </tr>
-
-                                <% for(let h = 0; h < matchesArray[k].participants.length; h++){
-                                    if(matchesArray[k].participants[h].teamId === 100){%>
-                                    <!--<div class="team-100">-->
-                                    <tr class="team-100">
-                                        <td><div class="player"><%=matchesArray[k].participantIdentities[h].player.summonerName%></div></td>
-                                        <td><div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div></td>
-                                        <td>
-                                            <div class="kda">
-                                                <div><%=matchesArray[k].participants[h].stats.kills%>/<%=matchesArray[k].participants[h].stats.deaths%>/<%=matchesArray[k].participants[h].stats.assists%></div>
-                                                <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="dmg-dealt">
-                                                <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="hidden-spell-container">
-                                                <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>
-                                                <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell2Id%>"><%= matchesArray[k].participants[h].spell2Id%></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="hidden-items">
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item0%>"><%= matchesArray[k].participants[h].stats.item0%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item1%>"><%= matchesArray[k].participants[h].stats.item1%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item2%>"><%= matchesArray[k].participants[h].stats.item2%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item3%>"><%= matchesArray[k].participants[h].stats.item3%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item4%>"><%= matchesArray[k].participants[h].stats.item4%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item5%>"><%= matchesArray[k].participants[h].stats.item5%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item6%>"><%= matchesArray[k].participants[h].stats.item6%></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!--</div>-->
-                                    <%}else{%>
-                                <!--<div class="team-200">-->
-                                    <tr class="team-200">
-                                        <td>
-                                            <div class="player"><%=matchesArray[k].participantIdentities[h].player.summonerName%></div>
-                                        </td>
-                                        <td>
-                                            <div class="champ" data-champ="<%=matchesArray[k].participants[h].championId%>"></div>
-                                        </td>
-                                        <td>
-                                            <div class="kda">
-                                                <div><%=matchesArray[k].participants[h].stats.kills%>/<%=matchesArray[k].participants[h].stats.deaths%>/<%=matchesArray[k].participants[h].stats.assists%></div>
-                                                <div>KDA <%=parseFloat(Math.round(((matchesArray[k].participants[h].stats.kills+matchesArray[k].participants[h].stats.assists)/matchesArray[k].participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="dmg-dealt">
-                                                <p>TotalDmg: <%=matchesArray[k].participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="hidden-spell-container"><p>
-                                                <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell1Id%>"><%= matchesArray[k].participants[h].spell1Id%></div>
-                                                <div class="spell" data-spell="<%= matchesArray[k].participants[h].spell2Id%>"><%= matchesArray[k].participants[h].spell2Id%></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="hidden-items">
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item0%>"><%= matchesArray[k].participants[h].stats.item0%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item1%>"><%= matchesArray[k].participants[h].stats.item1%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item2%>"><%= matchesArray[k].participants[h].stats.item2%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item3%>"><%= matchesArray[k].participants[h].stats.item3%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item4%>"><%= matchesArray[k].participants[h].stats.item4%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item5%>"><%= matchesArray[k].participants[h].stats.item5%></div>
-                                                <div class="item" data-item="<%= matchesArray[k].participants[h].stats.item6%>"><%= matchesArray[k].participants[h].stats.item6%></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <!--</div>-->
-                                    <%}}%>
-
-                                </table>
+                                <div class="champ" data-champ="<%= summoner.matchList[i].matchInfo.participants[k].championId%>">
+                                    <%= summoner.matchList[i].matchInfo.participants[k].championId%>
+                                </div>
+                                <div class="spell-container">
+                                    <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[k].spell1Id%>"><%= summoner.matchList[i].matchInfo.participants[k].spell1Id%></div>
+                                    <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[k].spell2Id%>"><%= summoner.matchList[i].matchInfo.participants[k].spell2Id%></div>
+                                </div>
+                                <div class="kda">
+                                    <div><p><%=summoner.matchList[i].matchInfo.participants[k].stats.kills%>/<%=summoner.matchList[i].matchInfo.participants[k].stats.deaths%>/<%=summoner.matchList[i].matchInfo.participants[k].stats.assists%></p></div>
+                                    <div><p>KDA <%=parseFloat(Math.round(((summoner.matchList[i].matchInfo.participants[k].stats.kills+summoner.matchList[i].matchInfo.participants[k].stats.assists)/summoner.matchList[i].matchInfo.participants[k].stats.deaths)*100)/100).toFixed(2)%></p></div>
+                                </div>
+                                <div class="items">
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item0%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item0%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item1%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item1%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item2%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item2%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item3%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item3%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item4%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item4%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item5%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item5%></div>
+                                    <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[k].stats.item6%>"><%= summoner.matchList[i].matchInfo.participants[k].stats.item6%></div>
+                                </div>
+                                <button class="more more-<%=summoner.matchList[i].matchInfo.participants[k].stats.win%>" data-btn="<%=summoner.matchList[i].gameId%>" >&#43;</button>
                             </div>
-                            <%}}%>
+                        <%}%>
+                    <%}%>
+                </div>
+            <!-- end Summoner info loop -->
+            <div class="hidden-match-data" data-divid="<%=summoner.matchList[i].gameId%>" data-minimized="true">
+                <div class="match-pagination">
+                    <div data-toggle="match_info">MatchInfo</div>
+                    <div data-toggle="timeline">Timeline</div>
+                    <div data-toggle="specials">SpecialInfo</div>
+                </div>
+                <!-- Start Loop for summoners per match -->
+                <table cellspacing="0" cellpadding="0" align="left">
+                    <tr>
+                        <th>Name</th>
+                        <th>Champion</th>
+                        <th>KDA</th>
+                        <th>Damage</th>
+                        <th>Spells</th>
+                        <th>Items</th>
+                    </tr>
 
-                        </div>
-                        <%} %>
+                    <% for(let h = 0; h < summoner.matchList[i].matchInfo.participants.length; h++){
+                    if(summoner.matchList[i].matchInfo.participants[h].teamId === 100){%>
+                    <!--<div class="team-100">-->
+                    <tr class="team-100">
+                        <td><div class="player"><%=summoner.matchList[i].matchInfo.participantIdentities[h].player.summonerName%></div></td>
+                        <td><div class="champ" data-champ="<%=summoner.matchList[i].matchInfo.participants[h].championId%>"></div></td>
+                        <td>
+                            <div class="kda">
+                                <div><%=summoner.matchList[i].matchInfo.participants[h].stats.kills%>/<%=summoner.matchList[i].matchInfo.participants[h].stats.deaths%>/<%=summoner.matchList[i].matchInfo.participants[h].stats.assists%></div>
+                                <div>KDA <%=parseFloat(Math.round(((summoner.matchList[i].matchInfo.participants[h].stats.kills+summoner.matchList[i].matchInfo.participants[h].stats.assists)/summoner.matchList[i].matchInfo.participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dmg-dealt">
+                                <p>TotalDmg: <%=summoner.matchList[i].matchInfo.participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hidden-spell-container">
+                                <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[h].spell1Id%>"><%= summoner.matchList[i].matchInfo.participants[h].spell1Id%></div>
+                                <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[h].spell2Id%>"><%= summoner.matchList[i].matchInfo.participants[h].spell2Id%></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hidden-items">
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item0%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item0%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item1%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item1%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item2%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item2%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item3%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item3%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item4%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item4%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item5%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item5%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item6%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item6%></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--</div>-->
+                    <%}else{%>
+                    <!--<div class="team-200">-->
+                    <tr class="team-200">
+                        <td>
+                            <div class="player"><%=summoner.matchList[i].matchInfo.participantIdentities[h].player.summonerName%></div>
+                        </td>
+                        <td>
+                            <div class="champ" data-champ="<%=summoner.matchList[i].matchInfo.participants[h].championId%>"></div>
+                        </td>
+                        <td>
+                            <div class="kda">
+                                <div><%=summoner.matchList[i].matchInfo.participants[h].stats.kills%>/<%=summoner.matchList[i].matchInfo.participants[h].stats.deaths%>/<%=summoner.matchList[i].matchInfo.participants[h].stats.assists%></div>
+                                <div>KDA <%=parseFloat(Math.round(((summoner.matchList[i].matchInfo.participants[h].stats.kills+summoner.matchList[i].matchInfo.participants[h].stats.assists)/summoner.matchList[i].matchInfo.participants[h].stats.deaths)*100)/100).toFixed(2)%></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dmg-dealt">
+                                <p>TotalDmg: <%=summoner.matchList[i].matchInfo.participants[h].stats.totalDamageDealtToChampions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");%></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hidden-spell-container"><p>
+                                <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[h].spell1Id%>"><%= summoner.matchList[i].matchInfo.participants[h].spell1Id%></div>
+                                <div class="spell" data-spell="<%= summoner.matchList[i].matchInfo.participants[h].spell2Id%>"><%= summoner.matchList[i].matchInfo.participants[h].spell2Id%></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hidden-items">
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item0%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item0%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item1%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item1%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item2%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item2%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item3%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item3%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item4%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item4%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item5%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item5%></div>
+                                <div class="item" data-item="<%= summoner.matchList[i].matchInfo.participants[h].stats.item6%>"><%= summoner.matchList[i].matchInfo.participants[h].stats.item6%></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--</div>-->
+                    <%}}%>
+
+                </table>
+            </div>
+            <%}%>
         </div>
+
+
+
+
+
     </div>
 
 
 <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tippy.js@1.4.1/dist/tippy.min.js" ></script>
     <script src="js/summoner.js"></script>
 </body>
 </html>
