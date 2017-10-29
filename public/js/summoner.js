@@ -23,7 +23,7 @@ j(document).ready(function () {
                     for(var k = 0; k < keys.length; k++){
                         if(result.data[keys[k]].key === allTables[i].dataset.spell){
                             imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/spell/${result.data[keys[k]].image.full}" alt="spell"
-                                    ><div class="popup"><h4>${result.data[keys[k]].id}</h4>${result.data[keys[k]].description}</div>`;
+                                    ><div class="popup"><h4>${result.data[keys[k]].name}</h4>${result.data[keys[k]].description}</div>`;
                             allTables[i].innerHTML = imgTag;
                             tippy(allTables[i], {
                                 html: el => el.querySelector('.popup'),
@@ -32,7 +32,7 @@ j(document).ready(function () {
                                 animation: 'none',
                                 duration: [200, 0],
                                 flipDuration: 0,
-                                size: 'small'
+                                performance: true
                             });
 
 
@@ -52,8 +52,10 @@ j(document).ready(function () {
                 for(var i = 0; i < allTables.length; i++){
                     for(var k = 0; k < keys.length; k++){
                         if(result.data[keys[k]].key === allTables[i].dataset.champ){
-                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/champion/${result.data[keys[k]].image.full}" alt="spell"><div class="popup">
-                                <h4>${result.data[keys[k]].id}</h4>${result.data[keys[k]].description}</div>`;
+                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/champion/${result.data[keys[k]].image.full}" alt="spell">
+                                <div class="popup"><h4>${result.data[keys[k]].id}</h4>
+                                "${result.data[keys[k]].title}"
+                                <p>ROLE: ${result.data[keys[k]].tags.join("/")}</p></div>`;
                             allTables[i].innerHTML = imgTag;
                             tippy(allTables[i], {
                                 html: el => el.querySelector('.popup'),
@@ -62,12 +64,13 @@ j(document).ready(function () {
                                 arrow: true,
                                 animation: 'none',
                                 duration: [200, 0],
-                                size: 'small'
+                                performance: true
                             });
                         }
 
                     }
                 }
+                console.log(result);
             });
     }
     function getItemImages(){
@@ -84,7 +87,7 @@ j(document).ready(function () {
 
                         if(keys[k] === allTables[i].dataset.item){
                             imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/7.18.1/img/item/${result.data[keys[k]].image.full}" alt="spell">
-                                    <div class="popup"><h4>${result.data[keys[k]].id}</h4>${result.data[keys[k]].description}</div>`;
+                                    <div class="popup"><h4>${result.data[keys[k]].name}</h4>${result.data[keys[k]].description}</div>`;
                             allTables[i].innerHTML = imgTag;
                             tippy(allTables[i], {
                                 html: el => el.querySelector('.popup'),
@@ -92,12 +95,13 @@ j(document).ready(function () {
                                 theme: 'badassitems',
                                 animation: 'none',
                                 duration: [200, 0],
-                                size: 'small'
+                                performance: true
                             });
                         }
 
                     }
                 }
+                console.log(result);
             });
     }
     moreBtn.click(function(){
