@@ -22,7 +22,7 @@ j(document).ready(function () {
                 for(var i = 0; i < allTables.length; i++){
                     for(var k = 0; k < keys.length; k++){
                         if(result.data[keys[k]].key === allTables[i].dataset.spell){
-                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22/img/spell/${result.data[keys[k]].image.full}" alt="spell"
+                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22.1/img/spell/${result.data[keys[k]].image.full}" alt="spell"
                                     ><div class="popup"><h4>${result.data[keys[k]].name}</h4>${result.data[keys[k]].description}</div>`;
                             allTables[i].innerHTML = imgTag;
                             tippy(allTables[i], {
@@ -52,7 +52,7 @@ j(document).ready(function () {
                 for(var i = 0; i < allTables.length; i++){
                     for(var k = 0; k < keys.length; k++){
                         if(result.data[keys[k]].key === allTables[i].dataset.champ){
-                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22/img/champion/${result.data[keys[k]].image.full}" alt="spell">
+                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22.1/img/champion/${result.data[keys[k]].image.full}" alt="spell">
                                 <div class="popup"><h4>${result.data[keys[k]].id}</h4>
                                 "${result.data[keys[k]].title}"
                                 <p>ROLE: ${result.data[keys[k]].tags.join("/")}</p></div>`;
@@ -80,13 +80,13 @@ j(document).ready(function () {
                 keys = Object.keys(result.data);
                 for(var i = 0; i < allTables.length; i++){
                     if(allTables[i].dataset.item === "0"){
-                        imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22/img/item/3637.png" alt="spell">`
+                        imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22.1/img/item/3637.png" alt="spell">`
                         allTables[i].innerHTML = imgTag;
                     }
                     for(var k = 0; k < keys.length; k++){
 
                         if(keys[k] === allTables[i].dataset.item){
-                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22/img/item/${result.data[keys[k]].image.full}" alt="spell">
+                            imgTag = `<img class="img-fluid" src="http://ddragon.leagueoflegends.com/cdn/9.22.1/img/item/${result.data[keys[k]].image.full}" alt="spell">
                                     <div class="popup"><h4>${result.data[keys[k]].name}</h4>${result.data[keys[k]].description}</div>`;
                             allTables[i].innerHTML = imgTag;
                             tippy(allTables[i], {
