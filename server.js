@@ -104,13 +104,13 @@ app.get('/', function(req, res){
 
 app.get('/summoner', isSessionExists, function (req, res) {
 
-    axios("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+req.query.summonername+"?api_key="+process.env.API_KEY)
+    axios.get("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+req.query.summonername+"?api_key="+process.env.API_KEY)
         .then(function(response){
             summoner = response.data;
             return response.data;
         })
         .then(function(data){
-            axios("https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+data.accountId+"?endIndex=10&api_key="+process.env.API_KEY)
+            axios.get("https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+data.accountId+"?endIndex=10&api_key="+process.env.API_KEY)
                 .then(function(matchlist){
                    summoner.matchList = matchlist.data.matches;
                     console.log(summoner.matchList);
@@ -122,7 +122,7 @@ app.get('/summoner', isSessionExists, function (req, res) {
                     matchCounter = 0;
                     var promise = new Promise(function(resolve, reject){
                         matchdata.matchList.forEach(function(match, index, arr){
-                            axios("https://na1.api.riotgames.com/lol/match/v4/matches/" + match.gameId + "?api_key=" + process.env.API_KEY)
+                            axios.get("https://na1.api.riotgames.com/lol/match/v4/matches/" + match.gameId + "?api_key=" + process.env.API_KEY)
                                 .then(function(matchResult){
                                     summoner.matchList[index].matchInfo = matchResult.data;
                                     matchCounter++;
@@ -226,7 +226,7 @@ app.get('/matches/timelines/:match', isSessionExists,function (req, res) {
  */
 
 app.get('/calculator', isLoggedIn,function(req,res) {
-    axios("https://na1.api.riotgames.com/lol/static-data/v4/items?locale=en_US&tags=all&api_key="+process.env.API_KEY)
+    axios.get("https://na1.api.riotgames.com/lol/static-data/v4/items?locale=en_US&tags=all&api_key="+process.env.API_KEY)
         .then(function(response){
             let itemData = response.data;
             var query = req.query;
